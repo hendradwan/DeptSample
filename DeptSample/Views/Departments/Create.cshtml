@@ -1,0 +1,58 @@
+@model DeptSample.Data.Models.Department
+<h2>Create Department</h2>
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Logo</label>
+      
+        <input type="file" name="logoFile"  class="form-control" accept=".jpg,.jpeg,.png,.gif,.bmp,.webp" />
+        <span class="text-danger" id="logoFileError" ></span>
+        <span asp-validation-for="LogoPath" class="text-danger"></span>
+
+    </div>
+    <div class="mb-3">
+      
+        <div>
+            <label>Select Parent Department (optional)</label>
+            <ul id="parentTree">
+                @foreach (var dept in ViewBag.AllDepartments as List<DeptSample.Data.Models.Department>)
+                {
+                    @Html.Partial("_ParentDepartmentTreeItem", dept)
+                }
+            </ul>
+        </div>
+
+        <input type="hidden" id="ParentDepartmentId" name="ParentDepartmentId" />
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const fileInput = document.querySelector('input[name="logoFile"]');
+            const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+            const errorSpan = document.getElementById('logoFileError');
+            errorSpan.textContent = '';
+
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.files[0].name.toLowerCase();
+                const ext = fileName.split('.').pop();
+                if (!allowedExtensions.includes(ext)) {
+                    e.preventDefault(); // prevent form submission
+                    errorSpan.textContent = 'Only image files (.jpg, .png, .gif, etc.) are allowed.';
+                }
+            }
+        });
+    </script>
+}
+
+

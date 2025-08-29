@@ -1,0 +1,32 @@
+﻿@model DeptSample.Data.Models.Department
+
+
+<li>
+    <span class="tree-toggle" onclick="toggleSub(this)">
+        ▶ <span onclick="selectParent(@Model.Id, this)" class="tree-node">
+
+            <strong>  <a href="@Url.Action("Details", "Departments", new { id = @Model.Id })">@Model.Name</a></strong>
+            @if (!string.IsNullOrEmpty(Model.LogoPath))
+            {
+                <img src="@Model.LogoPath" alt="Logo" width="30" />
+            }
+        </span>
+    
+    </span>
+
+   
+
+    @if (Model.SubDepartments != null && Model.SubDepartments.Any())
+    {
+        <ul class="tree-branch" style="display: none;">
+            @foreach (var sub in Model.SubDepartments)
+            {
+                @Html.Partial("_DepartmentTreeItem", sub)
+            }
+        </ul>
+    }
+</li>
+
+
+@* 
+<a href="@Url.Action("Details", "Departments", new { id = @Model.Id })">@Model.Name</a> *@

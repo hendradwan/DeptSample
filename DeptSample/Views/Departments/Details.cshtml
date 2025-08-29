@@ -1,0 +1,20 @@
+ @model DeptSample.Data.Models.Department
+<h2>@Model.Name</h2>
+@if (!string.IsNullOrEmpty(Model.LogoPath))
+{
+    <img src="@Model.LogoPath" width="100" />
+}
+<h3>Sub-Departments</h3>
+<ul>
+    @foreach (var sub in Model.SubDepartments)
+    {
+        <li><a href="@Url.Action("Details", "Departments", new { id = sub.Id })">@sub.Name</a></li>
+    }
+</ul>
+<h3>Parent Departments</h3>
+<ul>
+    @foreach (var parent in (List<DeptSample.Data.Models.Department>)ViewBag.Parents)
+    {
+        <li>@parent.Name</li>
+    }
+</ul>

@@ -1,0 +1,10 @@
+@model List<DeptSample.Data.Models.Department>
+<h2>Departments Tree</h2>
+<a class="btn btn-primary mb-3" asp-action="Create">Add Department</a>
+
+<ul>
+    @foreach (var dept in Model)
+    {
+        @Html.Partial("_DepartmentTreeItem", dept)
+    }
+</ul>

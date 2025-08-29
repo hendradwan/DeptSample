@@ -1,0 +1,19 @@
+@model List<DeptSample.Data.Models.Reminder>
+<h2>Reminders</h2>
+<table>
+    <thead>
+        <tr><th>Title</th><th>Email</th><th>Time</th><th>Sent</th></tr>
+    </thead>
+    <tbody>
+    @foreach (var r in Model)
+    {
+        <tr>
+            <td>@r.Title</td>
+            <td>@r.Email</td>
+            <td>@r.ReminderTime</td>
+            <td>@r.IsSent</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a href="@Url.Action("Create", "Reminders")">Set New Reminder</a>
